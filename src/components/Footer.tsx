@@ -98,21 +98,27 @@ function Footer({ onOpenModal }: FooterProps) {
 
           <div className="flex space-x-6">
             <a
-              href="#"
+              href="https://x.com/mdkgameteam"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-neon-cyan hover:scale-125 transition-all duration-300 hover-glow"
               aria-label="Twitter"
             >
               <Twitter size={20} />
             </a>
             <a
-              href="#"
+              href="https://discord.gg/HC8XpD77Gt"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-neon-pink hover:scale-125 transition-all duration-300 hover-glow"
               aria-label="Discord"
             >
               <MessageCircle size={20} />
             </a>
             <a
-              href="#"
+              href="https://github.com/DexRevil/MDK-Launcher/releases"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-neon-cyan hover:scale-125 transition-all duration-300 hover-glow"
               aria-label="GitHub"
             >
