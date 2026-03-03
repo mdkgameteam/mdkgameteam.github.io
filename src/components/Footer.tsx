@@ -32,20 +32,15 @@ function Footer({ onOpenModal }: FooterProps) {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="https://discord.gg/HC8XpD77Gt"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full"
                 >
                   Discord de la comunidad
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full"
-                >
-                  Discord de Beta Tests
-                </a>
-              </li>
+
             </ul>
           </div>
 
