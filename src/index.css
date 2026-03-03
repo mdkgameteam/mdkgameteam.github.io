@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* ===== FADE ANIMATIONS ===== */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ===== SLIDE ANIMATIONS ===== */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ===== GLOW ANIMATIONS ===== */
+  @keyframes glow-pulse {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(255, 110, 199, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(255, 110, 199, 1), 0 0 40px rgba(0, 255, 255, 0.8);
+    }
+  }
+
+  @keyframes box-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(255, 110, 199, 0.3), 0 0 40px rgba(0, 255, 255, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(255, 110, 199, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+    }
+  }
+
+  /* ===== FLOATING ANIMATIONS ===== */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* ===== SCROLL ANIMATION ===== */
+  @keyframes scroll {
+    0% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(12px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== SHIMMER ANIMATION ===== */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  /* ===== ROTATE ANIMATION ===== */
+  @keyframes rotate-infinite {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ===== BOUNCE ANIMATION ===== */
+  @keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* ===== UTILITY CLASSES ===== */
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+
+  .animate-fade-in-scale {
+    animation: fade-in-scale 0.8s ease-out;
+  }
+
+  .animate-fade-in-delay {
+    animation: fade-in 1s ease-out 0.3s both;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.8s ease-out;
+  }
+
+  .animate-slide-up-delay {
+    animation: slide-up 0.8s ease-out 0.2s both;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.8s ease-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.8s ease-out;
+  }
+
+  .animate-scroll {
+    animation: scroll 2s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: slide-up 0.6s ease-out both;
+  }
+
+  .animate-glow {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  .animate-glow-box {
+    animation: box-glow 3s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 5s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 1000px 100%;
+  }
+
+  .animate-rotate {
+    animation: rotate-infinite 20s linear infinite;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.6s ease-out;
+  }
+
+  /* ===== GRADIENT ANIMATIONS ===== */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient-shift 6s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  /* ===== BACKDROP BLUR & EFFECTS ===== */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(20px);
+  }
+
+  /* ===== HOVER EFFECTS ===== */
+  .hover-lift {
+    @apply transition-all duration-300 hover:shadow-2xl hover:shadow-neon-pink/50 hover:-translate-y-2;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-neon-cyan/50;
+  }
+
+  /* ===== NEON EFFECTS ===== */
+  .neon-text {
+    text-shadow: 0 0 6px rgba(255, 110, 199, 0.8), 0 0 12px rgba(0, 255, 255, 0.6);
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 10px rgba(255, 110, 199, 0.4), 0 0 20px rgba(0, 255, 255, 0.2);
+  }
+
+  .neon-glow-strong {
+    box-shadow: 0 0 15px rgba(255, 110, 199, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans bg-black text-white transition-colors duration-500;
+}
+
+/* force all heading elements white for visibility */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-white;
+}
+
+/* custom dark scrollbars to match UI panels */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1e2f; /* dark purple/blue tone */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(255,110,199,0.8), rgba(0,255,255,0.8));
+  border-radius: 4px;
+  border: 2px solid #1e1e2f;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(255,110,199,1), rgba(0,255,255,1));
+}
+/* Firefox scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,110,199,0.8) #1e1e2f;
+}
+
