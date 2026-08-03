@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Send } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import logo from '../MDKby.png';
 import { supabase } from '../lib/supabase';
 import emailjs from '@emailjs/browser';
@@ -11,6 +11,25 @@ function Contact() {
     mensaje: '',
   });
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
+    show: false,
+    message: '',
+    type: 'success',
+  });
+
+  // Auto-ocultar el toast después de 3 segundos
+  useEffect(() => {
+    if (toast.show) {
+      const timer = setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast.show]);
+
+  const showToastMessage = (message: string, type: 'success' | 'error') => {
+    setToast({ show: true, message, type });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,10 +55,10 @@ function Contact() {
       );
 
       setFormData({ nombre: '', email: '', mensaje: '' });
-      alert('Mensaje enviado. ¡Gracias!');
+      showToastMessage('¡Mensaje enviado con éxito!', 'success');
     } catch (err) {
       console.error('Error saving contact', err);
-      alert('Error al enviar el mensaje');
+      showToastMessage('Hubo un error al enviar el mensaje', 'error');
     } finally {
       setLoading(false);
     }
@@ -139,6 +158,24 @@ function Contact() {
             </form>
           </div>
         </div>
+      </div>
+
+      {/* Animated Toast Notification */}
+      <div
+        className={`fixed bottom-8 right-8 z-50 flex items-center space-x-3 px-6 py-4 rounded-xl shadow-2xl transition-all duration-500 transform ${
+          toast.show ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'
+        } ${
+          toast.type === 'success'
+            ? 'bg-slate-900 border border-neon-cyan shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+            : 'bg-slate-900 border border-neon-pink shadow-[0_0_20px_rgba(236,72,153,0.3)]'
+        }`}
+      >
+        {toast.type === 'success' ? (
+          <CheckCircle2 className="text-neon-cyan" size={24} />
+        ) : (
+          <AlertCircle className="text-neon-pink" size={24} />
+        )}
+        <p className="text-white font-medium">{toast.message}</p>
       </div>
     </section>
   );
