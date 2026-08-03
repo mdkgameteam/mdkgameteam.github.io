@@ -160,22 +160,44 @@ function Contact() {
         </div>
       </div>
 
-      {/* Animated Toast Notification */}
+      {/* Centered Modal Popup */}
       <div
-        className={`fixed bottom-8 right-8 z-50 flex items-center space-x-3 px-6 py-4 rounded-xl shadow-2xl transition-all duration-500 transform ${
-          toast.show ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'
-        } ${
-          toast.type === 'success'
-            ? 'bg-slate-900 border border-neon-cyan shadow-[0_0_20px_rgba(6,182,212,0.3)]'
-            : 'bg-slate-900 border border-neon-pink shadow-[0_0_20px_rgba(236,72,153,0.3)]'
+        className={`fixed inset-0 z-50 flex items-center justify-center px-4 transition-all duration-500 ${
+          toast.show ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {toast.type === 'success' ? (
-          <CheckCircle2 className="text-neon-cyan" size={24} />
-        ) : (
-          <AlertCircle className="text-neon-pink" size={24} />
-        )}
-        <p className="text-white font-medium">{toast.message}</p>
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        
+        {/* Modal Content */}
+        <div 
+          className={`relative bg-slate-900 border ${
+            toast.type === 'success' ? 'border-neon-cyan shadow-[0_0_30px_rgba(6,182,212,0.4)]' : 'border-neon-pink shadow-[0_0_30px_rgba(236,72,153,0.4)]'
+          } rounded-2xl p-8 max-w-sm w-full text-center transform transition-all duration-500 ${
+            toast.show ? 'scale-100 translate-y-0' : 'scale-90 translate-y-8'
+          }`}
+        >
+          {toast.type === 'success' ? (
+            <div className="mx-auto w-24 h-24 mb-6 rounded-full bg-neon-cyan/20 flex items-center justify-center animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">
+              <div className="w-16 h-16 rounded-full bg-neon-cyan flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.8)]">
+                <CheckCircle2 className="text-black" size={40} />
+              </div>
+            </div>
+          ) : (
+            <div className="mx-auto w-24 h-24 mb-6 rounded-full bg-neon-pink/20 flex items-center justify-center animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">
+              <div className="w-16 h-16 rounded-full bg-neon-pink flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.8)]">
+                <AlertCircle className="text-black" size={40} />
+              </div>
+            </div>
+          )}
+          
+          <h3 className="text-2xl font-bold text-white mb-2">
+            {toast.type === 'success' ? '¡Enviado!' : 'Error'}
+          </h3>
+          <p className="text-gray-300 text-lg">
+            {toast.type === 'success' ? 'Su mensaje ha sido enviado.' : 'Hubo un error al enviar el mensaje.'}
+          </p>
+        </div>
       </div>
     </section>
   );
