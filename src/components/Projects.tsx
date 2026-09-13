@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { useLanguage } from '../context/LanguageContext';
 
 interface Project {
   id: string;
@@ -13,6 +14,7 @@ function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [selected, setSelected] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -37,12 +39,11 @@ function Projects() {
   if (loading) {
     return (
       <section id="proyectos" className="bg-black py-24 px-6">
-        <div className="text-center text-gray-400">Cargando proyectos...</div>
+        <div className="text-center text-gray-400">{t.projects.loading}</div>
       </section>
     );
   }
 
-  // limit the number of 'destacados' to two and render the rest in a separate section
   const featuredProjects = projects.slice(0, 2);
   const otherProjects = projects.slice(2);
 
@@ -52,10 +53,10 @@ function Projects() {
         <div className="mb-20">
           <div className="text-center mb-16 animate-slideIn">
             <h2 className="text-5xl md:text-6xl font-extrabold text-white mb-4 animate-glow">
-              Proyectos Destacados
+              {t.projects.title}
             </h2>
-            <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">Estos son todas la creaciones de MDK</p>
-            <p className="text-gray-400 text-base leading-relaxed max-w-3xl mx-auto">MDK Se ha propuesto mejorar cada eventualmente que desanda, esto con la finalidad de prestarles a los jugadores o la largo del proyecto, mejorando así la gestión de los servidores, un launcher personalizado, nuevas mecánicas o funciones entre otras más características que podrías observar en nuestros proyectos</p>
+            <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">{t.projects.subtitle}</p>
+            <p className="text-gray-400 text-base leading-relaxed max-w-3xl mx-auto">{t.projects.description}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -97,7 +98,7 @@ function Projects() {
 
         {otherProjects.length > 0 && (
           <div className="mb-20">
-            <h3 className="text-3xl font-bold text-white mb-8 text-center">Otros Proyectos</h3>
+            <h3 className="text-3xl font-bold text-white mb-8 text-center">{t.projects.otherTitle}</h3>
             <div className="grid md:grid-cols-3 gap-8">
               {otherProjects.map((project, projectIndex) => (
                 <div
@@ -146,14 +147,16 @@ function Projects() {
             <h3 className="text-2xl font-bold text-white mb-2">{selected.title}</h3>
             <p className="text-gray-300 mb-4">{selected.description}</p>
             <div className="flex gap-2 flex-wrap mb-4">
-              {selected.tags.map((t: string, i: number) => (
+              {selected.tags.map((tTag: string, i: number) => (
                 <span key={i} className="px-3 py-1 bg-gradient-to-r from-neon-pink to-neon-cyan text-white text-sm rounded-full">
-                  {t}
+                  {tTag}
                 </span>
               ))}
             </div>
             <div className="text-right">
-              <button onClick={() => setSelected(null)} className="px-4 py-2 bg-neon-cyan text-black rounded">Cerrar</button>
+              <button onClick={() => setSelected(null)} className="px-4 py-2 bg-neon-cyan text-black rounded font-medium">
+                {t.projects.close}
+              </button>
             </div>
           </div>
         </div>

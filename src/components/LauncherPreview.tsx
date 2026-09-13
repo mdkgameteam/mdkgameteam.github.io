@@ -1,17 +1,20 @@
 import React from 'react';
 import SectionCard from './ui/SectionCard';
 import launcherImg from '../launcher.png';
+import { useLanguage } from '../context/LanguageContext';
 
 function LauncherPreview() {
+  const { t } = useLanguage();
+
   return (
-    <SectionCard id="launcher" title={<span className="text-white animate-glow">Descargar MDK Launcher</span>}>
+    <SectionCard id="launcher" title={<span className="text-white animate-glow">{t.launcher.title}</span>}>
       {/* Description */}
       <div className="text-gray-300 space-y-3 mb-8 animate-slide-up">
         <p className="text-base leading-relaxed">
-          Presentamos el launcher de MDK, con el cual permitirá facilitar el acceso a nuestros servidores en Minecraft. La mayoría de los eventos serán manejados y ejecutados desde el Launcher de MDK.
+          {t.launcher.description1}
         </p>
-        <p className="text-xs italic text-gray-500 p-3 bg-gradient-to-r from-slate-900/50 to-slate-800/50 border border-slate-700 rounded-lg backdrop-blur-sm hover-glow transition-all duration-300">
-          ℹ️ El launcher puede contener algunos errores. Por favor, si encuentra alguno reportelo con el staff de MDK.
+        <p className="text-xs italic text-gray-400 p-3 bg-gradient-to-r from-slate-900/50 to-slate-800/50 border border-slate-700 rounded-lg backdrop-blur-sm hover-glow transition-all duration-300">
+          {t.launcher.disclaimer}
         </p>
       </div>
 
@@ -27,11 +30,11 @@ function LauncherPreview() {
       {/* CTA Button */}
       <div className="flex justify-center mt-8 animate-slide-up">
         <a
-          href="/#/launcher"
+          href="/launcher"
           className="px-8 py-4 bg-gradient-to-r from-neon-pink to-neon-cyan text-white font-semibold rounded-lg hover-lift neon-glow-strong transition-all duration-300 group"
         >
           <span className="flex items-center gap-2">
-            Ver todas las descargas
+            {t.launcher.viewAllBtn}
             <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
           </span>
         </a>

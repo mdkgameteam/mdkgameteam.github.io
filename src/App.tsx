@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 
 const Navbar = lazy(() => import('./components/Navbar'));
 const Hero = lazy(() => import('./components/Hero'));
@@ -21,7 +22,6 @@ function HomePage({ openModal }: { openModal: (name: 'about' | 'terms' | 'securi
     <>
       <Navbar onOpenModal={openModal} />
       <Hero />
-
       <About onShowMore={() => openModal('about')} />
       <Projects />
       <Contact />
@@ -43,25 +43,27 @@ function App() {
   const close = () => setOpenModal(null);
 
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-black transition-colors duration-500">
-        <Suspense fallback={<div className="text-center py-20 text-white">Cargando...</div>}>
-          <Routes>
-            <Route path="/" element={<HomePage openModal={open} />} />
-            <Route path="/launcher" element={<LauncherPage onOpenModal={open} />} />
-            <Route path="/admin" element={<AdminPage />} />
-          </Routes>
+    <LanguageProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-black transition-colors duration-500">
+          <Suspense fallback={<div className="text-center py-20 text-white">Loading / Cargando...</div>}>
+            <Routes>
+              <Route path="/" element={<HomePage openModal={open} />} />
+              <Route path="/launcher" element={<LauncherPage onOpenModal={open} />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Routes>
 
-          {openModal && (
-            <Modal open={Boolean(openModal)} onClose={close}>
-              {openModal === 'about' && <AboutLong />}
-              {openModal === 'terms' && <Terms />}
-              {openModal === 'security' && <Security />}
-            </Modal>
-          )}
-        </Suspense>
-      </div>
-    </BrowserRouter>
+            {openModal && (
+              <Modal open={Boolean(openModal)} onClose={close}>
+                {openModal === 'about' && <AboutLong />}
+                {openModal === 'terms' && <Terms />}
+                {openModal === 'security' && <Security />}
+              </Modal>
+            )}
+          </Suspense>
+        </div>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
 

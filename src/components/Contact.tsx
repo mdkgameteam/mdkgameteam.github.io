@@ -3,21 +3,24 @@ import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import logo from '../MDKby.png';
 import { supabase } from '../lib/supabase';
 import emailjs from '@emailjs/browser';
+import { useLanguage } from '../context/LanguageContext';
 
 function Contact() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
     mensaje: '',
   });
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
+  const [toast, setToast] = useState<{ show: boolean; title: string; message: string; type: 'success' | 'error' }>({
     show: false,
+    title: '',
     message: '',
     type: 'success',
   });
 
-  // Auto-ocultar el toast después de 3 segundos
+  // Auto-hide modal toast after 3 seconds
   useEffect(() => {
     if (toast.show) {
       const timer = setTimeout(() => {
@@ -27,8 +30,8 @@ function Contact() {
     }
   }, [toast.show]);
 
-  const showToastMessage = (message: string, type: 'success' | 'error') => {
-    setToast({ show: true, message, type });
+  const showToastMessage = (title: string, message: string, type: 'success' | 'error') => {
+    setToast({ show: true, title, message, type });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,24 +44,28 @@ function Contact() {
 
       if (error) throw error;
 
-      // Enviar correo con EmailJS
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          name: formData.nombre,
-          email: formData.email,
-          message: formData.mensaje,
-          time: new Date().toLocaleString()
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+      // Send email with EmailJS
+      try {
+        await emailjs.send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          {
+            name: formData.nombre,
+            email: formData.email,
+            message: formData.mensaje,
+            time: new Date().toLocaleString(),
+          },
+          import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        );
+      } catch (mailErr) {
+        console.warn('EmailJS send warning:', mailErr);
+      }
 
       setFormData({ nombre: '', email: '', mensaje: '' });
-      showToastMessage('¡Mensaje enviado con éxito!', 'success');
+      showToastMessage(t.contact.modalSuccessTitle, t.contact.modalSuccessText, 'success');
     } catch (err) {
       console.error('Error saving contact', err);
-      showToastMessage('Hubo un error al enviar el mensaje', 'error');
+      showToastMessage(t.contact.modalErrorTitle, t.contact.modalErrorText, 'error');
     } finally {
       setLoading(false);
     }
@@ -77,11 +84,10 @@ function Contact() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-slide-in-left">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 animate-glow">
-              Contáctanos
+              {t.contact.title}
             </h2>
             <p className="text-gray-400 text-lg mb-8">
-              ¿Tienes alguna pregunta o quieres colaborar con nosotros? Envíanos un mensaje
-              y te responderemos lo antes posible.
+              {t.contact.description}
             </p>
 
             <div className="relative w-64 h-64 mx-auto md:mx-0">
@@ -101,7 +107,7 @@ function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="animate-fade-in" style={{ animationDelay: '100ms' }}>
                 <label htmlFor="nombre" className="block text-white mb-2 font-medium">
-                  Nombre *
+                  {t.contact.nameLabel}
                 </label>
                 <input
                   type="text"
@@ -111,13 +117,13 @@ function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all duration-300"
-                  placeholder="Tu nombre"
+                  placeholder={t.contact.namePlaceholder}
                 />
               </div>
 
               <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
                 <label htmlFor="email" className="block text-white mb-2 font-medium">
-                  Email *
+                  {t.contact.emailLabel}
                 </label>
                 <input
                   type="email"
@@ -127,13 +133,13 @@ function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all duration-300"
-                  placeholder="tu@email.com"
+                  placeholder={t.contact.emailPlaceholder}
                 />
               </div>
 
               <div className="animate-fade-in" style={{ animationDelay: '300ms' }}>
                 <label htmlFor="mensaje" className="block text-white mb-2 font-medium">
-                  Mensaje *
+                  {t.contact.messageLabel}
                 </label>
                 <textarea
                   id="mensaje"
@@ -143,7 +149,7 @@ function Contact() {
                   required
                   rows={4}
                   className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan/50 transition-all duration-300 resize-none"
-                  placeholder="Escribe tu mensaje aquí..."
+                  placeholder={t.contact.messagePlaceholder}
                 />
               </div>
 
@@ -152,7 +158,7 @@ function Contact() {
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-neon-pink to-neon-cyan hover:from-neon-cyan hover:to-neon-pink text-white font-semibold py-3 rounded-lg transition-all duration-300 hover-lift neon-glow-strong flex items-center justify-center space-x-2 group disabled:opacity-50"
               >
-                <span>{loading ? 'Enviando...' : 'Enviar Mensaje'}</span>
+                <span>{loading ? t.contact.sendingBtn : t.contact.sendBtn}</span>
                 <Send size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </form>
@@ -168,9 +174,9 @@ function Contact() {
       >
         {/* Backdrop */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        
+
         {/* Modal Content */}
-        <div 
+        <div
           className={`relative bg-slate-900 border ${
             toast.type === 'success' ? 'border-neon-cyan shadow-[0_0_30px_rgba(6,182,212,0.4)]' : 'border-neon-pink shadow-[0_0_30px_rgba(236,72,153,0.4)]'
           } rounded-2xl p-8 max-w-sm w-full text-center transform transition-all duration-500 ${
@@ -190,12 +196,12 @@ function Contact() {
               </div>
             </div>
           )}
-          
+
           <h3 className="text-2xl font-bold text-white mb-2">
-            {toast.type === 'success' ? '¡Enviado!' : 'Error'}
+            {toast.title}
           </h3>
           <p className="text-gray-300 text-lg">
-            {toast.type === 'success' ? 'Su mensaje ha sido enviado.' : 'Hubo un error al enviar el mensaje.'}
+            {toast.message}
           </p>
         </div>
       </div>

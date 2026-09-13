@@ -1,12 +1,16 @@
 import React from 'react';
 import { Github, Twitter, MessageCircle } from 'lucide-react';
 import logo from '../MDKby.png';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FooterProps {
   onOpenModal?: (name: 'about' | 'terms' | 'security') => void;
 }
 
 function Footer({ onOpenModal }: FooterProps) {
+  const { t } = useLanguage();
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-black bg-gradient-to-t from-slate-900 via-slate-900 to-neon-blue/10 border-t border-slate-800 relative overflow-hidden">
       {/* Decorative background elements */}
@@ -23,12 +27,12 @@ function Footer({ onOpenModal }: FooterProps) {
               <span className="text-white font-bold group-hover:text-neon-cyan transition-colors duration-300">MDK GAME TEAM</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Creando experiencias únicas en Minecraft desde 2022
+              {t.footer.tagline}
             </p>
           </div>
 
           <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
-            <h3 className="text-white font-semibold mb-4 neon-text">Comunidad</h3>
+            <h3 className="text-white font-semibold mb-4 neon-text">{t.footer.community}</h3>
             <ul className="space-y-2">
               <li>
                 <a
@@ -37,22 +41,21 @@ function Footer({ onOpenModal }: FooterProps) {
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full"
                 >
-                  Discord de la comunidad
+                  {t.footer.communityDiscord}
                 </a>
               </li>
-
             </ul>
           </div>
 
           <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
-            <h3 className="text-white font-semibold mb-4 neon-text">Equipo</h3>
+            <h3 className="text-white font-semibold mb-4 neon-text">{t.footer.team}</h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="/#contacto"
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full"
                 >
-                  Contacto
+                  {t.footer.contact}
                 </a>
               </li>
               <li>
@@ -60,14 +63,14 @@ function Footer({ onOpenModal }: FooterProps) {
                   href="/#equipo"
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full"
                 >
-                  Acerca de
+                  {t.footer.about}
                 </a>
               </li>
             </ul>
           </div>
 
           <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
-            <h3 className="text-white font-semibold mb-4 neon-text">Docs</h3>
+            <h3 className="text-white font-semibold mb-4 neon-text">{t.footer.docs}</h3>
             <ul className="space-y-2">
               <li>
                 <button
@@ -75,7 +78,7 @@ function Footer({ onOpenModal }: FooterProps) {
                   onClick={() => onOpenModal && onOpenModal('terms')}
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full cursor-pointer"
                 >
-                  Términos y Condiciones
+                  {t.footer.terms}
                 </button>
               </li>
               <li>
@@ -84,7 +87,7 @@ function Footer({ onOpenModal }: FooterProps) {
                   onClick={() => onOpenModal && onOpenModal('security')}
                   className="text-gray-400 hover:text-neon-cyan transition-colors duration-300 text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-neon-cyan after:transition-[width] after:duration-300 hover:after:w-full cursor-pointer"
                 >
-                  Seguridad del Launcher
+                  {t.footer.security}
                 </button>
               </li>
             </ul>
@@ -93,7 +96,7 @@ function Footer({ onOpenModal }: FooterProps) {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center animate-slide-up">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            MDK Game Team - {new Date().getFullYear()} © Todos los derechos reservados
+            {t.footer.rights.replace('{year}', String(currentYear))}
           </p>
 
           <div className="flex space-x-6">

@@ -1,8 +1,10 @@
 import React from 'react';
-// the video resides in the `src` root, so just go up one level from components
 import video from '../pantalla.mp4';
+import { useLanguage } from '../context/LanguageContext';
 
 function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden font-sans pt-20">
       {/* Animated gradient background */}
@@ -30,20 +32,20 @@ function Hero() {
         {/* Main heading with staggered animation */}
         <div className="mb-4 animate-fade-in-scale">
           <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-neon-cyan border border-neon-cyan/50 rounded-full backdrop-blur-sm neon-glow">
-            ✨ Bienvenido a MDK GAME TEAM
+            {t.hero.badge}
           </span>
         </div>
 
         <h1 className="text-6xl md:text-8xl font-extrabold text-white mb-6 animate-slide-up neon-text">
-          MDK GAME TEAM
+          {t.hero.title}
         </h1>
         
         <p className="text-2xl md:text-3xl text-neon-cyan mb-8 animate-slide-up font-light tracking-widest neon-text">
-          #MDKForce
+          {t.hero.tagline}
         </p>
         
         <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto animate-slide-up mb-12">
-          Creando contenido único y de calidad para Minecraft
+          {t.hero.description}
         </p>
 
         {/* CTA Button */}
@@ -52,13 +54,13 @@ function Hero() {
             href="/#proyectos"
             className="px-8 py-4 bg-gradient-to-r from-neon-pink to-neon-cyan text-white font-bold rounded-lg hover-lift transition-all duration-300"
           >
-            Explorar Proyectos
+            {t.hero.exploreBtn}
           </a>
           <a
             href="/launcher"
             className="px-8 py-4 border-2 border-neon-cyan text-neon-cyan font-bold rounded-lg hover:bg-neon-cyan/10 transition-all duration-300"
           >
-            Descargar Launcher
+            {t.hero.downloadBtn}
           </a>
         </div>
       </div>
